@@ -25,3 +25,16 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Funcionalidades
+
+Visualiza un mapa; 
+permite moverse arrastrándolo; 
+muestra la longitud y la latitud del centro del mapa de manera atualizada;
+muestra el grado de zoom y permite cambiarlo;
+permite poner marcadores, nombrarlos y arrastrarlos a cualquier ubicación;
+los marcadores tienen persistencia mediante el localStorage;
+pestaña dedicada a mostrar ubicaciones destacadas. 
+
+## futuras actualizaciones
+posibilidad de que el usuario añada ubicaciones destacadas.
