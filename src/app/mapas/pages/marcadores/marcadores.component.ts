@@ -13,8 +13,19 @@ interface colorMarker {
   selector: 'app-marcadores',
   templateUrl: './marcadores.component.html',
   styles: [`
-  .mapa-container{height: 100%; width: 100%;}
-  #zoom{background-color: white; border-radius:5px; position:fixed; bottom: 50px; left:50px; padding:10px; z-index:1; width:450px;}
+  .mapa-container{
+    height: 100%; 
+    width: 100%;}
+  #zoom{
+    background-color:white; 
+    border-radius:5px; 
+    position:fixed; 
+    bottom: 50px; 
+    left:50px; 
+    padding:10px; 
+    z-index:1; 
+    width:450px;
+  }
   .list-group{
     position:fixed;
     top:20px;
@@ -132,6 +143,7 @@ export class MarcadoresComponent implements AfterViewInit, OnDestroy {
         this.saveMarkersLocalStorage()});
     })
   }
+
   deleteMarker(i:number){
     //borramos el marcador
     this.markers[i].marker?.remove();

@@ -8,11 +8,11 @@ interface Propiedad {
 
 @Component({
   selector: 'app-propiedades',
-  templateUrl: './propiedades.component.html',
+  templateUrl: './lugaresDestacados.component.html',
   styles: [
   ]
 })
-export class PropiedadesComponent {
+export class LugaresDestacadosComponent {
 
   propiedades: Propiedad[] = [
     {
