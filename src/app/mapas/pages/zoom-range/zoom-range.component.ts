@@ -22,7 +22,7 @@ export class ZoomRangeComponent implements AfterViewInit, OnDestroy {
   mapa!:mapboxgl.Map;
   @ViewChild('mapa') divMapa!: ElementRef;
   zoomLevel: number = 17;
-  center: [number,number]=[2.7679602230631,42.12509032625227];
+  center: [number,number]=[2.7579602230631,42.13509032625227];
 
   ngAfterViewInit(): void {
     this.mapa = new mapboxgl.Map({

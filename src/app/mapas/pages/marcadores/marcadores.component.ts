@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import * as mapboxgl from 'mapbox-gl';
 
@@ -14,6 +14,7 @@ interface colorMarker {
   templateUrl: './marcadores.component.html',
   styles: [`
   .mapa-container{height: 100%; width: 100%;}
+  #zoom{background-color: white; border-radius:5px; position:fixed; bottom: 50px; left:50px; padding:10px; z-index:1; width:450px;}
   .list-group{
     position:fixed;
     top:20px;
@@ -24,7 +25,7 @@ interface colorMarker {
   `
   ]
 })
-export class MarcadoresComponent implements AfterViewInit {
+export class MarcadoresComponent implements AfterViewInit, OnDestroy {
 
   //instancia del mapa:
   mapa!:mapboxgl.Map;
@@ -46,9 +47,24 @@ export class MarcadoresComponent implements AfterViewInit {
       style: 'mapbox://styles/mapbox/streets-v11',
       center:this.center,
       zoom:this.zoomLevel
-      });
+    });
+    //event listener para obtener el zoom:
+    this.mapa.on('zoom',()=>{this.zoomLevel = this.mapa.getZoom();})
+    this.mapa.on('zoomend',()=>{ if(this.mapa.getZoom()>20){this.mapa.zoomTo(20);}})
+    this.mapa.on('move', (event)=>{
+      const target = event.target;
+      //desestructuramos longitud y latitud que está en el objeto:
+      const {lng,lat} = target.getCenter();
+      this.center=[lng,lat];
+    })
+    this.readMarkersLocalStorage();
+  }
 
-      this.readMarkersLocalStorage();
+  ngOnDestroy(): void {
+    //destruimos los listeners cuando el componente se destruya para que no pueda duplicarse y no perdamos rendimiento:
+    this.mapa.off('zoom',()=>{});
+    this.mapa.off('zoomend',()=>{});
+    this.mapa.off('move',()=>{});
   }
 
   createMarker(){
@@ -143,4 +159,15 @@ export class MarcadoresComponent implements AfterViewInit {
     console.log(this.markers[i].name);
     this.saveMarkersLocalStorage();
   }
+
+  zoomIn(){
+    this.mapa.zoomIn();
+  }
+  zoomOut(){
+    this.mapa.zoomOut();
+  }
+  cambioZoomInput(valor:string){
+    this.mapa.zoomTo(Number(valor));
+  }
+
 }
