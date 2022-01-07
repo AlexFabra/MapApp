@@ -31,6 +31,4 @@ export class MiniMapaComponent implements AfterViewInit {
       });
       new mapboxgl.Marker().setLngLat(this.lngLat).addTo(mapa)
   }
-
-
 }

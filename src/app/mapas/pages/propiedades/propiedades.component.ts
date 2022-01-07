@@ -16,24 +16,24 @@ export class PropiedadesComponent {
 
   propiedades: Propiedad[] = [
     {
-      titulo: 'Casa residencial, Canadá',
-      descripcion: 'Bella propiedad en Katana, Canadá',
-      lngLat: [ -75.92722289474008, 45.280015511264466]
+      titulo: 'Les Estunes, Porqueres/Girona',
+      descripcion: 'Reserva natural',
+      lngLat: [ 2.7461490983838117,42.11350571779783 ]
     },
     {
-      titulo: 'Casa de playa, México',
-      descripcion: 'Hermosa casa de playa en Acapulco, México',
-      lngLat: [ -99.91287720907991, 16.828940930185748]
+      titulo: 'Bosc de Can Morgat, Porqueres/Girona',
+      descripcion: 'Refugio de vida salvaje',
+      lngLat: [ 2.7496908740989645,42.13342505387283 ]
     },
     {
-      titulo: 'Apartamento, Argentina',
-      descripcion: 'Lujoso apartamento en el corazón de Buenos Aires, Argentina',
-      lngLat: [ -58.430166677283445, -34.57150108832866 ]
+      titulo: 'Bosc de Can Puig, Banyoles/Girona',
+      descripcion: 'Parque',
+      lngLat: [ 2.777546155752192,42.12415172308415 ]
     },
     {
-      titulo: 'Local comercial, España',
-      descripcion: 'Local comercial disponible en Madrid, España, cerca de El Jardín Secreto.',
-      lngLat: [ -3.7112735618380177, 40.42567285425766 ]
+      titulo: 'Estanyol den Sisó, Banyoles/Girona',
+      descripcion: 'Reserva natural',
+      lngLat: [ 2.752806111445631,42.1275940614373 ]
     },
   ]
 }

@@ -1,10 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import * as mapboxgl from 'mapbox-gl';
 
 interface colorMarker {
   color: string;
   centro?: [number,number]
   marker?: mapboxgl.Marker;
+  name?:string;
 }
 
 @Component({
@@ -34,8 +36,9 @@ export class MarcadoresComponent implements AfterViewInit {
   zoomLevel: number = 15;
   center: [number,number]=[2.7679602230631,42.12509032625227];
   center1: [number,number]=[2.7679602230631,42.12519032625227];
-
-  constructor() { }
+     
+  constructor() {
+  }
 
   ngAfterViewInit(): void {
     this.mapa = new mapboxgl.Map({
@@ -44,14 +47,6 @@ export class MarcadoresComponent implements AfterViewInit {
       center:this.center,
       zoom:this.zoomLevel
       });
-
-      const markerHtml: HTMLElement = document.createElement('div');
-      markerHtml.innerHTML='Mi casa'
-      //creación de marcador:
-      const marker = new mapboxgl.Marker()
-      .setLngLat(this.center).addTo(this.mapa);
-      const marker1 = new mapboxgl.Marker({element:markerHtml})
-      .setLngLat(this.center1).addTo(this.mapa);
 
       this.readMarkersLocalStorage();
   }
@@ -88,16 +83,16 @@ export class MarcadoresComponent implements AfterViewInit {
 
     this.markers.forEach(m=>{
       const color = m.color;
+      const name = m.name;
       //como getLngLat regresa un objeto, usamos la desestructuración para extraer solo dos propiedades.
       const {lng,lat} = m.marker!.getLngLat();
-      lngLatArr.push({color: color, centro: [lng,lat]})
+      lngLatArr.push({color: color, centro: [lng,lat],name})
       })
       //pasamos el objeto a string para guardarlo en el local storage dentro del item markers.
       localStorage.setItem('markers',JSON.stringify(lngLatArr));
   }
   readMarkersLocalStorage(){
     if(!localStorage.getItem('markers')){
-      console.log('halo');
       return;
     }
     const lngLatArr: colorMarker[] = JSON.parse(localStorage.getItem('markers')!);
@@ -112,7 +107,8 @@ export class MarcadoresComponent implements AfterViewInit {
 
       this.markers.push({
         marker:newMarker,
-        color:m.color
+        color:m.color,
+        name:m.name
       })
       //listener para guardar los marcadores cada vez que se acabe
       // de arrastrar uno y así mantener actualizadas las posiciones en el localStorage:
@@ -120,12 +116,31 @@ export class MarcadoresComponent implements AfterViewInit {
         this.saveMarkersLocalStorage()});
     })
   }
-  borrarMarcador(i:number){
+  deleteMarker(i:number){
     //borramos el marcador
     this.markers[i].marker?.remove();
     //borramos el lugar del array para el marcador:
     this.markers.splice(i,1);
     //actualizamos el localStorage:
+    this.saveMarkersLocalStorage();
+  }
+  /** comprueva que el marcador tenga nombre
+   * @param i posición en el array markers
+   * @returns true si tiene nombre
+   */
+  checkName(i:number): boolean{
+    if(this.markers[i].name===undefined){
+      return false;
+    }
+    return true;
+  }
+  /** añade un nombre al marcador:
+   * @param i posición en el array markers
+   * @param event nombre escrito por el usuario en el marcador
+   */
+  addName(i:number, event:any ){
+    this.markers[i].name=event.target.value;
+    console.log(this.markers[i].name);
     this.saveMarkersLocalStorage();
   }
 }

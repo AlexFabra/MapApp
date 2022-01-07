@@ -4,8 +4,16 @@
     class="list-group-item" 
     *ngFor="let marker of markers; let i = index"
     (click)="goToMarker(marker)" 
-    (dblclick)="borrarMarcador(i)"
-    [ngStyle]="{'background-color': marker.color}">Marcador {{i+1}}</li>
+    (dblclick)="deleteMarker(i)"
+    [ngStyle]="{'background-color': marker.color}">
+    Marcador {{i+1}} : 
+    <div *ngIf="!checkName(i)">
+        <input type="text" class="form-control" placeholder="nombre" (keyup.enter)="addName(i, $event)">
+    </div>
+    <div *ngIf="checkName(i)">
+        <p>{{marker.name}}</p>
+    </div>
+    </li>
 </ul>
 <div #mapa class="mapa-container"></div>
 
